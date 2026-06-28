@@ -1,0 +1,690 @@
+/* styles.css - Embedded Premium Design System */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Variables for Themes */
+:root {
+    /* Classic Wood Theme (Default) */
+    --bg-color: #f2e6d0;
+    --bg-pattern: radial-gradient(#8b5a2b 0.5px, transparent 0.5px), radial-gradient(#8b5a2b 0.5px, #f2e6d0 0.5px);
+    --bg-pattern-size: 40px 40px;
+    --text-primary: #3a2212;
+    --text-secondary: #704424;
+    --board-border: #2a1508;
+    --board-bg: linear-gradient(135deg, #a7703e, #6e431f);
+    --hole-bg: radial-gradient(circle at 50% 30%, #301a0a, #0c0502);
+    --hole-border: #4a2a14;
+    --hole-shadow: inset 0 8px 16px rgba(0,0,0,0.9), inset 0 -4px 8px rgba(255,255,255,0.05);
+    --stone-p1-bg: radial-gradient(circle at 35% 35%, #555555, #1a1a1a, #000000);
+    --stone-p1-text: rgba(255, 255, 255, 0.7);
+    --stone-p2-bg: radial-gradient(circle at 35% 35%, #ffffff, #dcdcdc, #aaaaaa);
+    --stone-p2-text: rgba(0, 0, 0, 0.6);
+    --accent-color: #b87333; /* Bronze */
+    --accent-glow: rgba(184, 115, 51, 0.5);
+    --panel-bg: rgba(255, 255, 255, 0.45);
+    --panel-border: rgba(139, 90, 43, 0.15);
+    --shadow-color: rgba(90, 58, 34, 0.2);
+}
+
+[data-theme="leather"] {
+    --bg-color: #2b1f1d;
+    --bg-pattern: radial-gradient(#402f2d 1px, transparent 1px);
+    --bg-pattern-size: 30px 30px;
+    --text-primary: #f2e1c9;
+    --text-secondary: #d3b194;
+    --board-border: #140d0c;
+    --board-bg: linear-gradient(135deg, #4d332d, #2d1c18);
+    --hole-bg: radial-gradient(circle at 50% 30%, #170e0c, #030000);
+    --hole-border: #2f1d1a;
+    --hole-shadow: inset 0 10px 20px rgba(0,0,0,0.95), inset 0 -3px 6px rgba(255,255,255,0.03);
+    --stone-p1-bg: radial-gradient(circle at 35% 35%, #d4af37, #aa8c2c, #594916); /* Golden/Amber */
+    --stone-p1-text: #fff;
+    --stone-p2-bg: radial-gradient(circle at 35% 35%, #e5ded4, #bfae9b, #897864); /* Raw Ivory */
+    --stone-p2-text: #333;
+    --accent-color: #c8963e;
+    --accent-glow: rgba(200, 150, 62, 0.5);
+    --panel-bg: rgba(45, 33, 31, 0.6);
+    --panel-border: rgba(211, 177, 148, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="royal"] {
+    --bg-color: #060b14;
+    --bg-pattern: linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px), linear-gradient(0deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    --bg-pattern-size: 50px 50px;
+    --text-primary: #fbf5e6;
+    --text-secondary: #c9af67;
+    --board-border: #c9af67;
+    --board-bg: linear-gradient(135deg, #0e1b30, #050d18);
+    --hole-bg: radial-gradient(circle at 50% 30%, #030812, #000205);
+    --hole-border: #142a4a;
+    --hole-shadow: inset 0 8px 18px rgba(212, 175, 55, 0.15), inset 0 6px 12px rgba(0,0,0,0.9);
+    --stone-p1-bg: radial-gradient(circle at 35% 35%, #ffffff, #dcdcdc, #777777); /* Pearl */
+    --stone-p1-text: #333;
+    --stone-p2-bg: radial-gradient(circle at 35% 35%, #ffd700, #daa520, #8b6508); /* Shiny Gold */
+    --stone-p2-text: #fff;
+    --accent-color: #ffd700;
+    --accent-glow: rgba(255, 215, 0, 0.6);
+    --panel-bg: rgba(14, 27, 48, 0.7);
+    --panel-border: rgba(201, 175, 103, 0.25);
+    --shadow-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Global resets & typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    background-image: var(--bg-pattern);
+    background-size: var(--bg-pattern-size);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .kazakh-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+}
+
+/* Layout container */
+.app-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    gap: 24px;
+    max-width: 1700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+@media (max-width: 1280px) {
+    .app-container {
+        grid-template-columns: 300px 1fr;
+    }
+    .right-sidebar {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 1024px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+    .left-sidebar, .right-sidebar {
+        grid-column: span 1;
+    }
+}
+
+/* Premium Panel Container */
+.premium-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--panel-border);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 32px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.premium-panel:hover {
+    box-shadow: 0 12px 40px var(--shadow-color);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+/* Kazakh Ornament Accents */
+.ornament-border {
+    position: relative;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.ornament-border::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-image: radial-gradient(circle, var(--accent-color) 2px, transparent 3px);
+    background-size: 10px 4px;
+}
+
+/* Board styling with 3D perspective */
+.board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    perspective: 1200px;
+}
+
+.togyz-board {
+    width: 100%;
+    max-width: 950px;
+    background: var(--board-bg);
+    background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png'); /* Subtle wood texture */
+    border: 8px solid var(--board-border);
+    outline: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow:
+        0 10px 0 #1a0f08, /* 3D Side */
+        0 20px 50px rgba(0,0,0,0.6),
+        inset 0 0 60px rgba(0,0,0,0.5);
+    border-radius: 24px;
+    padding: 35px 25px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 25px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotateX(10deg);
+}
+
+.togyz-board:hover {
+    transform: rotateX(5deg) translateY(-5px);
+}
+
+.row-holes {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .togyz-board {
+        grid-template-columns: 1fr;
+        padding: 15px 10px;
+    }
+    .row-holes {
+        gap: 6px;
+    }
+    .kazan-container {
+        flex-direction: row !important;
+        justify-content: space-around;
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+/* Recessed Holes with deeper 3D effect */
+.otau-hole {
+    aspect-ratio: 1 / 1;
+    min-height: 60px;
+    border-radius: 50%;
+    background: var(--hole-bg);
+    border: 3px solid var(--hole-border);
+    box-shadow:
+        inset 0 12px 24px rgba(0,0,0,0.9),
+        inset 0 -4px 10px rgba(255,255,255,0.05),
+        0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    overflow: visible;
+}
+
+.otau-hole:hover:not(.disabled) {
+    transform: scale(1.05);
+    border-color: var(--accent-color);
+    box-shadow: var(--hole-shadow), 0 0 15px var(--accent-glow);
+}
+
+.otau-hole.disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Otau numbering label */
+.otau-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    pointer-events: none;
+}
+.row-p2-labels {
+    top: -22px;
+}
+.row-p1-labels {
+    bottom: -22px;
+}
+
+/* Kazan (Captured Stones Well) */
+.kazan-well {
+    width: 84px;
+    height: 180px;
+    border-radius: 42px;
+    background: var(--hole-bg);
+    border: 3px solid var(--hole-border);
+    box-shadow: var(--hole-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 8px;
+    position: relative;
+}
+
+.kazan-well.active-glow {
+    box-shadow: var(--hole-shadow), 0 0 15px var(--accent-glow);
+    border-color: var(--accent-color);
+}
+
+.kazan-score {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    z-index: 2;
+}
+
+.kazan-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+/* Tuzdyq glowing indicator */
+.tuzdyq-gold {
+    border-color: #ffd700 !important;
+    background: radial-gradient(circle at 50% 30%, #4a3b00, #0c0a00) !important;
+    box-shadow: inset 0 8px 16px rgba(0,0,0,0.9), 0 0 20px rgba(255, 215, 0, 0.45) !important;
+}
+.tuzdyq-gold::before {
+    content: "Т";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    font-weight: 800;
+    color: rgba(255, 215, 0, 0.25);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.tuzdyq-red {
+    border-color: #ff3b30 !important;
+    background: radial-gradient(circle at 50% 30%, #400a08, #0a0100) !important;
+    box-shadow: inset 0 8px 16px rgba(0,0,0,0.9), 0 0 20px rgba(255, 59, 48, 0.45) !important;
+}
+.tuzdyq-red::before {
+    content: "Т";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    font-weight: 800;
+    color: rgba(255, 59, 48, 0.25);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Beautiful Stones with realistic lighting */
+.kumalak-stone {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow:
+        2px 3px 4px rgba(0,0,0,0.6),
+        inset -2px -2px 3px rgba(0,0,0,0.5),
+        inset 2px 2px 3px rgba(255,255,255,0.2);
+    pointer-events: none;
+    z-index: 5;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.kumalak-stone.p1-stone {
+    background: var(--stone-p1-bg);
+}
+.kumalak-stone.p2-stone {
+    background: var(--stone-p2-bg);
+}
+
+/* Stone count counter badge */
+.stone-count-badge {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Ghost Stone preview hover effect */
+.ghost-stone-preview {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.otau-hole.hover-sow-path .ghost-stone-preview {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Last move pulsing circle */
+.last-move-indicator {
+    position: absolute;
+    width: 115%;
+    height: 115%;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    opacity: 0;
+    pointer-events: none;
+    animation: last-move-pulse 2s infinite ease-out;
+}
+
+@keyframes last-move-pulse {
+    0% { transform: scale(0.85); opacity: 1; }
+    100% { transform: scale(1.25); opacity: 0; }
+}
+
+/* Key move flag */
+.key-move-badge {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff3b30;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    z-index: 8;
+}
+
+/* Dynamic flying stones container */
+#animation-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.flying-kumalak {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    z-index: 1001;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Difficulty badges */
+.difficulty-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.difficulty-badge:hover {
+    transform: scale(1.1);
+}
+
+.difficulty-badge.active {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 12px var(--accent-glow);
+    transform: scale(1.12);
+}
+
+.diff-easy { background: linear-gradient(135deg, #8c6e53, #5a4230); }
+.diff-medium { background: linear-gradient(135deg, #b08d57, #85612c); }
+.diff-hard { background: linear-gradient(135deg, #d4af37, #997a15); }
+
+/* Custom Inputs and Range */
+.custom-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--hole-border);
+    border-radius: 3px;
+    outline: none;
+}
+
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 2px solid #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+}
+
+.custom-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Toggle switches */
+.toggle-btn {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--panel-border);
+    background: rgba(0,0,0,0.05);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-btn.active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+/* History move item styling */
+.history-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.history-item {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid transparent;
+}
+
+.history-item.p1-move {
+    border-left-color: var(--accent-color);
+}
+
+.history-item.p2-move {
+    border-left-color: var(--text-secondary);
+}
+
+/* AI Orbit loader */
+.loader-orbit {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.loader-stone {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    margin: -5px 0 0 -5px;
+}
+
+.loader-stone:nth-child(1) {
+    background: var(--stone-p1-bg);
+    animation: spin-orbit 1.6s linear infinite;
+}
+
+.loader-stone:nth-child(2) {
+    background: var(--stone-p2-bg);
+    animation: spin-orbit 1.6s linear infinite 0.53s;
+}
+
+.loader-stone:nth-child(3) {
+    background: var(--stone-p1-bg);
+    animation: spin-orbit 1.6s linear infinite 1.06s;
+}
+
+@keyframes spin-orbit {
+    0% { transform: rotate(0deg) translateX(18px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(18px) rotate(-360deg); }
+}
+
+/* Tutorial / Rules modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 650px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.open .modal-content {
+    transform: scale(1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.05);
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background: #ff3b30;
+    color: #fff;
+}
+
+/* Generic button styling */
+.action-btn {
+    background: var(--board-border);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:hover:not(:disabled) {
+    background: var(--accent-color);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
